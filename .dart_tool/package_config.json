@@ -248,6 +248,12 @@
       "languageVersion": "3.4"
     },
     {
+      "name": "intl",
+      "rootUri": "file:///home/nazim/.pub-cache/hosted/pub.dev/intl-0.20.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
+    },
+    {
       "name": "io",
       "rootUri": "file:///home/nazim/.pub-cache/hosted/pub.dev/io-1.0.5",
       "packageUri": "lib/",
