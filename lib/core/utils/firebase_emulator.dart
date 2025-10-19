@@ -10,14 +10,16 @@ class FirebaseEmulator {
     try {
       // ⚡️ Web et Mobile ont des méthodes légèrement différentes
       if (kIsWeb) {
+        // Web: use the package-specific emulator methods
         FirebaseFirestore.instance.useFirestoreEmulator('localhost', 8090);
-        FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
+        await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
         FirebaseStorage.instance.useStorageEmulator('localhost', 9199);
       } else {
         final firestore = FirebaseFirestore.instance;
         final auth = FirebaseAuth.instance;
         final storage = FirebaseStorage.instance;
 
+        // Mobile/Desktop: use the package-specific emulator methods
         firestore.useFirestoreEmulator('localhost', 8090);
         await auth.useAuthEmulator('localhost', 9099);
         await storage.useStorageEmulator('localhost', 9199);

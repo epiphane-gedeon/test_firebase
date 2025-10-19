@@ -72,3 +72,28 @@ node_modules/
 # Firebase emulator
 .firebase/
 .firebase/emulator-setup.json
+
+# Flutter/Dart
+.dart_tool/
+.buildlog/
+.packages
+pubspec.lock
+
+# Build outputs
+/build/
+android/app/build/
+ios/Pods/
+macos/Pods/
+linux/build/
+windows/build/
+
+# IDE
+.vscode/
+.idea/
+
+# Firebase local config (optionnel, si tu as des variantes locales)
+firebase-debug.log
+
+# Mac/Windows OS cruft
+.DS_Store
+Thumbs.db

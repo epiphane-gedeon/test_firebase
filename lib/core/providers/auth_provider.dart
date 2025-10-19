@@ -30,3 +30,9 @@ final authStateProvider = StreamProvider<UserModel?>((ref) {
 final authNotifierProvider = Provider<AuthRepository>((ref) {
   return ref.read(authRepositoryProvider);
 });
+
+// Current user as a separate provider (convenience)
+final currentUserProvider = Provider<UserModel?>((ref) {
+  final auth = ref.watch(authStateProvider);
+  return auth.asData?.value;
+});
