@@ -182,6 +182,35 @@ class DashboardScreen extends ConsumerWidget {
                     _showComingSoon(context);
                   },
                 ),
+                if (user.role == UserRole.admin ||
+                    user.role == UserRole.teacher)
+                  _buildFeatureCard(
+                    icon: Icons.people,
+                    title: 'Étudiants',
+                    color: Colors.green,
+                    onTap: () {
+                      context.push('/dashboard/students');
+                    },
+                  ),
+                if (user.role == UserRole.admin ||
+                    user.role == UserRole.teacher)
+                  _buildFeatureCard(
+                    icon: Icons.school,
+                    title: 'Classes',
+                    color: Colors.orange,
+                    onTap: () {
+                      context.push('/dashboard/classes');
+                    },
+                  ),
+                if (user.role == UserRole.admin)
+                  _buildFeatureCard(
+                    icon: Icons.person_pin,
+                    title: 'Enseignants',
+                    color: Colors.teal,
+                    onTap: () {
+                      context.push('/dashboard/teachers');
+                    },
+                  ),
                 _buildFeatureCard(
                   icon: Icons.book,
                   title: 'Mes Cours',
