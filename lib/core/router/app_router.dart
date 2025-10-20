@@ -11,12 +11,11 @@ import '../../features/students/presentation/screens/add_edit_student_screen.dar
 import '../../features/students/presentation/screens/edit_student_screen.dart';
 
 class AppRoutes {
+  // Routes de base
   static const splash = '/splash';
   static const login = '/login';
   static const register = '/register';
   static const dashboard = '/dashboard';
-  static const students = '/dashboard/students';
-  static String studentDetail(String id) => '/dashboard/students/$id';
 }
 
 final routerProvider = Provider<GoRouter>((ref) {
@@ -25,6 +24,7 @@ final routerProvider = Provider<GoRouter>((ref) {
   return GoRouter(
     initialLocation: AppRoutes.splash,
     routes: [
+      // Routes publiques
       GoRoute(
         path: AppRoutes.splash,
         name: 'splash',
@@ -40,42 +40,40 @@ final routerProvider = Provider<GoRouter>((ref) {
         name: 'register',
         builder: (context, state) => const RegisterScreen(),
       ),
+      
+      // Dashboard principal
       GoRoute(
         path: AppRoutes.dashboard,
         name: 'dashboard',
         builder: (context, state) => const DashboardScreen(),
         routes: [
-          // Students routes - Note: ces chemins sont RELATIFS à /dashboard
+          // Routes étudiants (gardons la structure simple pour l'instant)
           GoRoute(
-            path: 'students', // ← Chemin relatif:  /dashboard/students
+            path: 'students',
             name: 'students',
             builder: (context, state) => const StudentListScreen(),
           ),
-
           GoRoute(
-            path: 'students/add', // ← Chemin relatif: /dashboard/students/add
+            path: 'students/add',
             name: 'add_student',
             builder: (context, state) => const AddEditStudentScreen(),
           ),
-
           GoRoute(
-            path: 'students/edit/:id', // ← Chemin relatif: /dashboard/students/edit/:id
+            path: 'students/edit/:id',
             name: 'edit_student',
             builder: (context, state) {
               final id = state.pathParameters['id']!;
               return EditStudentScreen(id: id);
             },
           ),
-
           GoRoute(
-            path: 'students/:id', // ← Chemin relatif: /dashboard/students/:id
+            path: 'students/:id',
             name: 'student_detail',
             builder: (context, state) {
               final id = state.pathParameters['id']!;
               return StudentDetailScreen(id: id);
             },
           ),
-          
         ],
       ),
     ],

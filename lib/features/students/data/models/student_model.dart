@@ -1,15 +1,25 @@
 import '../../domain/entities/student_entity.dart';
 
 class StudentModel implements StudentEntity {
+  @override
   final String id;
+  @override
   final String userId;
+  @override
   final String firstName;
+  @override
   final String lastName;
+  @override
   final String? parentEmail;
+  @override
   final String classId;
+  @override
   final DateTime enrollmentDate;
+  @override
   final DateTime? dateOfBirth;
+  @override
   final String? address;
+  @override
   final String? phoneNumber;
 
   @override
