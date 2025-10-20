@@ -112,7 +112,16 @@ class DashboardScreen extends ConsumerWidget {
                     title: 'Classes',
                     color: Colors.orange,
                     onTap: () {
-                      // TODO: Naviguer vers la gestion des classes
+                      context.push('/dashboard/classes');
+                    },
+                  ),
+                if (user.role == UserRole.admin)
+                  _buildFeatureCard(
+                    icon: Icons.person_pin,
+                    title: 'Enseignants',
+                    color: Colors.teal,
+                    onTap: () {
+                      context.push('/dashboard/teachers');
                     },
                   ),
                 _buildFeatureCard(
