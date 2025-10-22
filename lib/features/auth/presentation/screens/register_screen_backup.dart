@@ -49,9 +49,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
 
     if (_passwordController.text.length < 6) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Le mot de passe doit contenir au moins 6 caractères'),
-        ),
+        const SnackBar(content: Text('Le mot de passe doit contenir au moins 6 caractères')),
       );
       return;
     }
@@ -76,15 +74,20 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text('Erreur : ${e.toString()}')));
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Erreur : ${e.toString()}')),
+        );
       }
     } finally {
       if (mounted) {
         setState(() => _isLoading = false);
       }
     }
+  }
+        }
+
+  @override
+  Widget build(BuildContext context) {
   }
 
   @override

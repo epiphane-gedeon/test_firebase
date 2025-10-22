@@ -23,7 +23,7 @@ class FirebaseEmulator {
 
       if (kIsWeb) {
         // Web: use the package-specific emulator methods
-        FirebaseFirestore.instance.useFirestoreEmulator(emulatorHost, 8090);
+        FirebaseFirestore.instance.useFirestoreEmulator(emulatorHost, 8080);
         await FirebaseAuth.instance.useAuthEmulator(emulatorHost, 9099);
         FirebaseStorage.instance.useStorageEmulator(emulatorHost, 9199);
       } else {
@@ -32,7 +32,7 @@ class FirebaseEmulator {
         final storage = FirebaseStorage.instance;
 
         // Mobile/Desktop: use the package-specific emulator methods
-        firestore.useFirestoreEmulator(emulatorHost, 8090);
+        firestore.useFirestoreEmulator(emulatorHost, 8080);
         await auth.useAuthEmulator(emulatorHost, 9099);
         await storage.useStorageEmulator(emulatorHost, 9199);
       }

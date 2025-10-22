@@ -1,46 +1,32 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../../features/auth/data/repositories/auth_repository_impl.dart';
-import '../../features/auth/domain/repositories/auth_repository.dart';
-import '../../features/auth/data/models/user_model.dart';
+import '../domain/repositories/auth_repository.dart';
+import '../data/repositories/auth_repository_impl.dart';
+import '../data/models/user_model.dart';
 
-// Providers for dependencies
+// Provider pour FirebaseAuth
 final firebaseAuthProvider = Provider<FirebaseAuth>((ref) {
   return FirebaseAuth.instance;
 });
 
-final firestoreProvider = Provider<FirebaseFirestore>((ref) {
+// Provider pour FirebaseFirestore
+final firebaseFirestoreProvider = Provider<FirebaseFirestore>((ref) {
   return FirebaseFirestore.instance;
 });
 
+// Provider pour AuthRepository
 final authRepositoryProvider = Provider<AuthRepository>((ref) {
-  return AuthRepositoryImpl(
-    firebaseAuth: ref.read(firebaseAuthProvider),
-    firestore: ref.read(firestoreProvider),
-  );
+  final firebaseAuth = ref.read(firebaseAuthProvider);
+  final firestore = ref.read(firebaseFirestoreProvider);
+
+  return AuthRepositoryImpl(firebaseAuth: firebaseAuth, firestore: firestore);
 });
 
-// Auth State Provider (principal stream)
-final authStateProvider = StreamProvider<UserModel?>((ref) {
-  return ref.read(authRepositoryProvider).user;
-});
-
-// Provider pour l'utilisateur connecté
+// Provider pour l'état de l'utilisateur connecté
 final userStreamProvider = StreamProvider<UserModel?>((ref) {
   final authRepository = ref.read(authRepositoryProvider);
   return authRepository.user;
-});
-
-// Auth Notifier Provider (pour compatibilité avec l'existant)
-final authNotifierProvider = Provider<AuthRepository>((ref) {
-  return ref.read(authRepositoryProvider);
-});
-
-// Current user as a separate provider (convenience)
-final currentUserProvider = Provider<UserModel?>((ref) {
-  final auth = ref.watch(authStateProvider);
-  return auth.asData?.value;
 });
 
 // Provider pour vérifier si l'utilisateur est connecté
@@ -50,6 +36,16 @@ final isUserLoggedInProvider = Provider<bool>((ref) {
     data: (user) => user != null,
     loading: () => false,
     error: (_, __) => false,
+  );
+});
+
+// Provider pour obtenir l'utilisateur connecté
+final currentUserProvider = Provider<UserModel?>((ref) {
+  final userAsync = ref.watch(userStreamProvider);
+  return userAsync.when(
+    data: (user) => user,
+    loading: () => null,
+    error: (_, __) => null,
   );
 });
 
@@ -124,7 +120,6 @@ final signOutProvider = FutureProvider<void>((ref) async {
   result.fold((error) => throw Exception(error), (_) {
     // Invalider les providers liés à l'authentification
     ref.invalidate(userStreamProvider);
-    ref.invalidate(authStateProvider);
   });
 });
 
@@ -164,7 +159,7 @@ class RegisterParams {
   });
 }
 
-// Classe pour les actions d'authentification
+// Classe pour les actions d'authentification (plus simple)
 class AuthController {
   final Ref _ref;
 

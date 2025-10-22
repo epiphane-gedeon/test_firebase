@@ -15,6 +15,9 @@ import '../../features/classes/presentation/screens/add_edit_class_screen.dart';
 import '../../features/teachers/presentation/screens/teacher_list_screen.dart';
 import '../../features/teachers/presentation/screens/teacher_detail_screen.dart';
 import '../../features/teachers/presentation/screens/add_edit_teacher_screen.dart';
+import '../../features/courses/presentation/screens/subject_list_screen.dart';
+import '../../features/courses/presentation/screens/subject_detail_screen.dart';
+import '../../features/courses/presentation/screens/add_edit_subject_screen.dart';
 
 class AppRoutes {
   // Routes de base
@@ -29,7 +32,8 @@ class AppRoutes {
   static String classDetail(String id) => '/dashboard/classes/$id';
   static const teachers = '/dashboard/teachers';
   static String teacherDetail(String id) => '/dashboard/teachers/$id';
-
+  static const subjects = '/dashboard/subjects';
+  static String subjectDetail(String id) => '/dashboard/subjects/$id';
 }
 
 final routerProvider = Provider<GoRouter>((ref) {
@@ -54,7 +58,7 @@ final routerProvider = Provider<GoRouter>((ref) {
         name: 'register',
         builder: (context, state) => const RegisterScreen(),
       ),
-      
+
       // Dashboard principal
       GoRoute(
         path: AppRoutes.dashboard,
@@ -89,7 +93,6 @@ final routerProvider = Provider<GoRouter>((ref) {
               return StudentDetailScreen(id: id);
             },
           ),
-
 
           // Classes routes
           GoRoute(
@@ -152,6 +155,38 @@ final routerProvider = Provider<GoRouter>((ref) {
             builder: (context, state) {
               final id = state.pathParameters['id']!;
               return TeacherDetailScreen(teacherId: id);
+            },
+          ),
+
+          // Subjects routes (Matières)
+          GoRoute(
+            path: 'subjects', // ← Chemin relatif: /dashboard/subjects
+            name: 'subjects',
+            builder: (context, state) => const SubjectListScreen(),
+          ),
+
+          GoRoute(
+            path: 'subjects/add', // ← Chemin relatif: /dashboard/subjects/add
+            name: 'add_subject',
+            builder: (context, state) => const AddEditSubjectScreen(),
+          ),
+
+          GoRoute(
+            path:
+                'subjects/edit/:id', // ← Chemin relatif: /dashboard/subjects/edit/:id
+            name: 'edit_subject',
+            builder: (context, state) {
+              final id = state.pathParameters['id']!;
+              return AddEditSubjectScreen(subjectId: id);
+            },
+          ),
+
+          GoRoute(
+            path: 'subjects/:id', // ← Chemin relatif: /dashboard/subjects/:id
+            name: 'subject_detail',
+            builder: (context, state) {
+              final id = state.pathParameters['id']!;
+              return SubjectDetailScreen(subjectId: id);
             },
           ),
         ],
