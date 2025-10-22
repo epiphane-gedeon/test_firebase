@@ -9,15 +9,14 @@ class FirebaseEmulator {
     if (!kDebugMode) return; // ⚡️ Ne configurer que pour le debug
 
     try {
-      // ⚡️ Determine the correct host for emulator connection
+      // Déterminer le bon host
       String emulatorHost;
       if (kIsWeb) {
         emulatorHost = 'localhost';
       } else if (Platform.isAndroid) {
-        // Android emulator uses 10.0.2.2 to access host machine
+        // Android emulator -> loopback
         emulatorHost = '10.0.2.2';
       } else {
-        // iOS simulator and other platforms can use localhost
         emulatorHost = 'localhost';
       }
 
@@ -35,10 +34,26 @@ class FirebaseEmulator {
         firestore.useFirestoreEmulator(emulatorHost, 8080);
         await auth.useAuthEmulator(emulatorHost, 9099);
         await storage.useStorageEmulator(emulatorHost, 9199);
+      // 🔹 Firestore
+      FirebaseFirestore.instance.useFirestoreEmulator(emulatorHost, 8080);
+
+      // Fix spécial Web pour éviter les erreurs de stream
+      if (kIsWeb) {
+        FirebaseFirestore.instance.settings = const Settings(
+          persistenceEnabled: false,
+          sslEnabled: false,
+          host: "localhost:8080",
+        );
       }
 
+      // 🔹 Auth
+      await FirebaseAuth.instance.useAuthEmulator(emulatorHost, 9099);
+
+      // 🔹 Storage
+      FirebaseStorage.instance.useStorageEmulator(emulatorHost, 9199);
+
       debugPrint(
-        '✅ Firebase Emulator configured successfully with host: $emulatorHost',
+        '✅ Firebase Emulator configuré avec succès (host: $emulatorHost)',
       );
     } catch (e) {
       debugPrint('❌ Emulator setup failed: $e');
