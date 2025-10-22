@@ -170,8 +170,9 @@ final routerProvider = Provider<GoRouter>((ref) {
       if (!isAuthenticated && !isLogin && !isRegister) return AppRoutes.login;
 
       // Si authentifié et sur login/register → rediriger vers dashboard
-      if (isAuthenticated && (isLogin || isRegister))
+      if (isAuthenticated && (isLogin || isRegister)) {
         return AppRoutes.dashboard;
+      }
 
       // Sinon, laisser passer
       return null;

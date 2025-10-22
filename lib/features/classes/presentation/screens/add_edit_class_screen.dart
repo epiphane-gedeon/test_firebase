@@ -215,7 +215,7 @@ class _AddEditClassScreenState extends ConsumerState<AddEditClassScreen> {
 
                       // Niveau/Grade
                       DropdownButtonFormField<String>(
-                        value: _selectedGrade,
+                        initialValue: _selectedGrade,
                         decoration: const InputDecoration(
                           labelText: 'Niveau *',
                           border: OutlineInputBorder(),
@@ -239,7 +239,7 @@ class _AddEditClassScreenState extends ConsumerState<AddEditClassScreen> {
 
                       // Année académique
                       DropdownButtonFormField<int>(
-                        value: _academicYear,
+                        initialValue: _academicYear,
                         decoration: const InputDecoration(
                           labelText: 'Année académique *',
                           border: OutlineInputBorder(),

@@ -187,6 +187,7 @@ class DashboardScreen extends ConsumerWidget {
                   _buildFeatureCard(
                     icon: Icons.people,
                     title: 'Étudiants',
+                    subtitle: 'Gérer les Étudiants',
                     color: Colors.green,
                     onTap: () {
                       context.push('/dashboard/students');
@@ -197,6 +198,7 @@ class DashboardScreen extends ConsumerWidget {
                   _buildFeatureCard(
                     icon: Icons.school,
                     title: 'Classes',
+                    subtitle: 'Gérer les classes',
                     color: Colors.orange,
                     onTap: () {
                       context.push('/dashboard/classes');
@@ -206,6 +208,7 @@ class DashboardScreen extends ConsumerWidget {
                   _buildFeatureCard(
                     icon: Icons.person_pin,
                     title: 'Enseignants',
+                    subtitle: 'Gérer le personnel Enseignant',
                     color: Colors.teal,
                     onTap: () {
                       context.push('/dashboard/teachers');
