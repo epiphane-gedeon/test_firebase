@@ -25,6 +25,13 @@ class FirebaseEmulator {
         FirebaseFirestore.instance.useFirestoreEmulator(emulatorHost, 8080);
         await FirebaseAuth.instance.useAuthEmulator(emulatorHost, 9099);
         FirebaseStorage.instance.useStorageEmulator(emulatorHost, 9199);
+
+        // Fix spécial Web pour éviter les erreurs de stream
+        FirebaseFirestore.instance.settings = const Settings(
+          persistenceEnabled: false,
+          sslEnabled: false,
+          host: "localhost:8080",
+        );
       } else {
         final firestore = FirebaseFirestore.instance;
         final auth = FirebaseAuth.instance;
@@ -34,29 +41,13 @@ class FirebaseEmulator {
         firestore.useFirestoreEmulator(emulatorHost, 8080);
         await auth.useAuthEmulator(emulatorHost, 9099);
         await storage.useStorageEmulator(emulatorHost, 9199);
-      // 🔹 Firestore
-      FirebaseFirestore.instance.useFirestoreEmulator(emulatorHost, 8080);
-
-      // Fix spécial Web pour éviter les erreurs de stream
-      if (kIsWeb) {
-        FirebaseFirestore.instance.settings = const Settings(
-          persistenceEnabled: false,
-          sslEnabled: false,
-          host: "localhost:8080",
-        );
       }
 
-      // 🔹 Auth
-      await FirebaseAuth.instance.useAuthEmulator(emulatorHost, 9099);
-
-      // 🔹 Storage
-      FirebaseStorage.instance.useStorageEmulator(emulatorHost, 9199);
-
       debugPrint(
-        '✅ Firebase Emulator configuré avec succès (host: $emulatorHost)',
+        '✅ Firebase Emulator configuré avec succès avec host: $emulatorHost',
       );
     } catch (e) {
-      debugPrint('❌ Emulator setup failed: $e');
+      debugPrint('❌ Erreur configuration emulator: $e');
     }
   }
 }
