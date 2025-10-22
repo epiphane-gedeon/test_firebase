@@ -308,7 +308,7 @@ class _AddEditTeacherScreenState extends ConsumerState<AddEditTeacherScreen> {
 
                       // Département
                       DropdownButtonFormField<String>(
-                        value: _selectedDepartment,
+                        initialValue: _selectedDepartment,
                         decoration: const InputDecoration(
                           labelText: 'Département',
                           border: OutlineInputBorder(),
