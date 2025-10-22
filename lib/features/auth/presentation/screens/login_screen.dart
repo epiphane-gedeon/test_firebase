@@ -26,32 +26,38 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   Future<void> _login() async {
     if (_emailController.text.isEmpty || _passwordController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Veuillez remplir tous les champs')),
+        const SnackBar(content: Text('Veuillez remplir tous les champs')),
       );
       return;
     }
 
     setState(() => _isLoading = true);
 
-    final authRepo = ref.read(authNotifierProvider);
-    final result = await authRepo.signInWithEmailAndPassword(
-      email: _emailController.text.trim(),
-      password: _passwordController.text.trim(),
-    );
+    try {
+      // Utiliser le nouveau contrôleur d'authentification
+      final authController = ref.read(authControllerProvider);
+      await authController.signIn(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+      );
 
-    setState(() => _isLoading = false);
-
-    result.fold(
-      (error) {
+      if (mounted) {
         ScaffoldMessenger.of(
           context,
-        ).showSnackBar(SnackBar(content: Text(error)));
-      },
-      (user) {
+        ).showSnackBar(const SnackBar(content: Text('Connexion réussie !')));
         // La navigation est gérée automatiquement par le router
-        debugPrint('Utilisateur connecté: ${user.email}');
-      },
-    );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Erreur : ${e.toString()}')));
+      }
+    } finally {
+      if (mounted) {
+        setState(() => _isLoading = false);
+      }
+    }
   }
 
   @override

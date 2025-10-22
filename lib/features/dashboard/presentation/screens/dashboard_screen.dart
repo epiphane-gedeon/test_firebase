@@ -58,7 +58,7 @@ class DashboardScreen extends ConsumerWidget {
         children: [
           _buildWelcomeHeader(user, 'Administrateur', Colors.red),
           const SizedBox(height: 24),
-          
+
           const Text(
             'Administration',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -86,7 +86,7 @@ class DashboardScreen extends ConsumerWidget {
                   subtitle: 'Organiser les classes',
                   color: Colors.orange,
                   onTap: () {
-                    _showComingSoon(context);
+                    context.push('/dashboard/classes');
                   },
                 ),
                 _buildFeatureCard(
@@ -95,16 +95,16 @@ class DashboardScreen extends ConsumerWidget {
                   subtitle: 'Gérer le personnel',
                   color: Colors.blue,
                   onTap: () {
-                    _showComingSoon(context);
+                    context.push('/dashboard/teachers');
                   },
                 ),
                 _buildFeatureCard(
                   icon: Icons.book,
-                  title: 'Gestion des Cours',
-                  subtitle: 'Planifier les cours',
+                  title: 'Gestion des Matières',
+                  subtitle: 'Créer et gérer les matières',
                   color: Colors.purple,
                   onTap: () {
-                    _showComingSoon(context);
+                    context.push('/dashboard/subjects');
                   },
                 ),
                 _buildFeatureCard(
@@ -142,7 +142,7 @@ class DashboardScreen extends ConsumerWidget {
         children: [
           _buildWelcomeHeader(user, 'Enseignant', Colors.blue),
           const SizedBox(height: 24),
-          
+
           const Text(
             'Mes Espaces',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -187,7 +187,7 @@ class DashboardScreen extends ConsumerWidget {
                   _buildFeatureCard(
                     icon: Icons.people,
                     title: 'Étudiants',
-                    subtitle: 'Gérer les Étudiants',
+                    subtitle: 'Gestion des étudiants',
                     color: Colors.green,
                     onTap: () {
                       context.push('/dashboard/students');
@@ -198,7 +198,7 @@ class DashboardScreen extends ConsumerWidget {
                   _buildFeatureCard(
                     icon: Icons.school,
                     title: 'Classes',
-                    subtitle: 'Gérer les classes',
+                    subtitle: 'Gestion des classes',
                     color: Colors.orange,
                     onTap: () {
                       context.push('/dashboard/classes');
@@ -208,7 +208,7 @@ class DashboardScreen extends ConsumerWidget {
                   _buildFeatureCard(
                     icon: Icons.person_pin,
                     title: 'Enseignants',
-                    subtitle: 'Gérer le personnel Enseignant',
+                    subtitle: 'Gestion des enseignants',
                     color: Colors.teal,
                     onTap: () {
                       context.push('/dashboard/teachers');
@@ -216,8 +216,8 @@ class DashboardScreen extends ConsumerWidget {
                   ),
                 _buildFeatureCard(
                   icon: Icons.book,
-                  title: 'Mes Cours',
-                  subtitle: 'Emploi du temps',
+                  title: 'Cours',
+                  subtitle: 'Gestion des cours',
                   color: Colors.purple,
                   onTap: () {
                     _showComingSoon(context);
@@ -258,7 +258,7 @@ class DashboardScreen extends ConsumerWidget {
         children: [
           _buildWelcomeHeader(user, 'Étudiant', Colors.green),
           const SizedBox(height: 24),
-          
+
           const Text(
             'Mon Espace',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -342,7 +342,7 @@ class DashboardScreen extends ConsumerWidget {
         children: [
           _buildWelcomeHeader(user, 'Parent', Colors.orange),
           const SizedBox(height: 24),
-          
+
           const Text(
             'Suivi de mon enfant',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -488,10 +488,7 @@ class DashboardScreen extends ConsumerWidget {
               Text(
                 subtitle,
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Colors.grey[600],
-                ),
+                style: TextStyle(fontSize: 12, color: Colors.grey[600]),
               ),
             ],
           ),
